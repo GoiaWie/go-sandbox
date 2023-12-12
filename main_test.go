@@ -8,14 +8,12 @@ func TestAdd(t *testing.T) {
 		a int
 		b int
 	}
-	tests := []struct {
-		name    string
+	tests := map[string]struct {
 		args    args
 		want    int
 		wantErr bool
 	}{
-		{
-			name: "two plus two",
+		"two plus two": {
 			args: args{
 				a: 2,
 				b: 2,
@@ -23,8 +21,7 @@ func TestAdd(t *testing.T) {
 			want:    4,
 			wantErr: false,
 		},
-		{
-			name: "big numbers",
+		"big numbers": {
 			args: args{
 				a: 99999999999,
 				b: 99999999999,
@@ -32,8 +29,7 @@ func TestAdd(t *testing.T) {
 			want:    199999999998,
 			wantErr: false,
 		},
-		{
-			name: "negative a",
+		"negative a": {
 			args: args{
 				a: -1,
 				b: 2,
@@ -41,8 +37,7 @@ func TestAdd(t *testing.T) {
 			want:    0,
 			wantErr: true,
 		},
-		{
-			name: "negative b",
+		"negative b": {
 			args: args{
 				a: 1,
 				b: -2,
@@ -50,8 +45,7 @@ func TestAdd(t *testing.T) {
 			want:    0,
 			wantErr: true,
 		},
-		{
-			name: "a is zero",
+		"a is zero": {
 			args: args{
 				a: 0,
 				b: 2,
@@ -59,8 +53,7 @@ func TestAdd(t *testing.T) {
 			want:    2,
 			wantErr: false,
 		},
-		{
-			name: "b is zero",
+		"b is zero": {
 			args: args{
 				a: 2,
 				b: 0,
@@ -69,8 +62,10 @@ func TestAdd(t *testing.T) {
 			wantErr: false,
 		},
 	}
-	for _, testCase := range tests {
-		t.Run(testCase.name, func(t *testing.T) {
+	for name, testCase := range tests {
+		name := name
+		testCase := testCase
+		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			got, err := Add(testCase.args.a, testCase.args.b)
 			if testCase.wantErr && err == nil {
